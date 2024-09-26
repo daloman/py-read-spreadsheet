@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: schedule-web
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: www.example.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: schedule-web
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - www.example.com
+    secretName: schedule-web-tls

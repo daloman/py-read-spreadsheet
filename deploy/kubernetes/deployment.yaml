@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: schedule-web
+  name: schedule-web
+spec:
+  selector:
+    matchLabels:
+      app: schedule-web
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: schedule-web
+    spec:
+      containers:
+      - image: nginx:1.27.1-alpine3.20-slim
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            cpu: "100m"
+            memory: 64Mi
+          limits:
+            cpu: "100"
+            memory: "128Mi"
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: schedule-data
+      restartPolicy: Always
+      volumes:
+      - name: schedule-data
+        persistentVolumeClaim:
+          claimName: schedule-data
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: schedule-web
+spec:
+  type: ClusterIP
+  selector:
+    app: schedule-web
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80

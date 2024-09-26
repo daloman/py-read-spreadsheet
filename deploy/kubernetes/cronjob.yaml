@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: read-schedule
+  namespace: default
+spec:
+  schedule: "10 */1 * * mon-sat"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: read-schedule
+            image: daloman/read-schedule:0.0.6
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: ETALON_PATH
+              value: "/usr/share/nginx/html/etalon.csv"
+            - name: SPREADSHEET_COLUMNS
+              value: "A:C,IK,IO:IP,IQ"
+            - name: TG_NOTIFICATIONS_ENABLE
+              value: "true"
+            - name: NOTIFICATIONS_API_URL
+              valueFrom:
+                secretKeyRef:
+                  name: notifications-config
+                  key: api_url
+            - name: NOTIFICATIONS_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: notifications-config
+                  key: bot_token
+            - name: NOTIFICATIONS_CHAT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: notifications-config
+                  key: chat_id
+            - name: SPREADSHEET_ID
+              valueFrom:
+                secretKeyRef:
+                  name: notifications-config
+                  key: spreadsheet_id
+            volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: schedule-data
+              readOnly: false
+          volumes:
+          - name: schedule-data
+            persistentVolumeClaim:
+              claimName: schedule-data
+          restartPolicy: OnFailure
