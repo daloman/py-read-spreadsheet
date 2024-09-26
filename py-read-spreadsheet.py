@@ -77,6 +77,8 @@ if len(data.sheet_names)>1:
     # Create html to paste dataframe in it
     with open(webpage, "w", encoding="utf-8") as file:
       file.writelines('<meta charset="UTF-8">\n')
+      file.writelines(f'<h1 align="center">{list}</h1>\n')
+      
       file.write(html)
 
     # Save data from spreadsheet as etalon if it is absent.
