@@ -66,7 +66,7 @@ if len(data.sheet_names)>1:
         count += 1
 
     logger.info("List found: %s, list index is: %d" % (list, list_index))
-    schedule = data.parse(count, usecols=spreadsheet_columns)
+    schedule = data.parse(list_index, usecols=spreadsheet_columns)
     mygroup = schedule.tail(-2)
     mygroup.to_csv(temporary, index=False, header=False)
    
