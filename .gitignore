@@ -170,3 +170,5 @@ cython_debug/
 *.csv
 .~lock*
 local/
+
+.DS_Store

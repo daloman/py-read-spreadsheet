@@ -11,13 +11,13 @@ spec:
         spec:
           containers:
           - name: read-schedule
-            image: daloman/read-schedule:0.0.6
-            imagePullPolicy: IfNotPresent
+            image: ghcr.io/daloman/py-read-spreadsheet:main
+            imagePullPolicy: Always
             env:
             - name: ETALON_PATH
               value: "/usr/share/nginx/html/etalon.csv"
             - name: SPREADSHEET_COLUMNS
-              value: "A:C,IK,IO:IP,IQ"
+              value: "A:C,HG,HK,HL,HM"
             - name: TG_NOTIFICATIONS_ENABLE
               value: "true"
             - name: NOTIFICATIONS_API_URL
