@@ -19,7 +19,7 @@ temporary="temporary.csv"
 
 log_level=os.environ.get('LOG_LEVEL','INFO')
 webpage=os.environ.get('SCHEDULE_HTML',"/usr/share/nginx/html/index.html")
-spreadsheet_columns = os.environ.get('SPREADSHEET_COLUMNS', "A:C,IL,IP:IQ,IR")
+spreadsheet_columns = os.environ.get('SPREADSHEET_COLUMNS', "A:C,HF,HH,HL:HN")
 
 tg_notifications_enable = os.environ.get('TG_NOTIFICATIONS_ENABLE', "False")
 api_url = os.environ.get('NOTIFICATIONS_API_URL')
