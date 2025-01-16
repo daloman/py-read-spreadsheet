@@ -48,7 +48,7 @@ data=pd.ExcelFile(original)
 today = datetime.datetime.today()
 monday = today - datetime.timedelta(datetime.datetime.weekday(today))
 saturday = today + datetime.timedelta(5 - datetime.datetime.weekday(today))
-list_name_search_template = f"{monday.strftime('%d.%m')}-{saturday.strftime('%d.%m')}"
+list_name_search_template = f"{monday.strftime('%d.%m')}.*{saturday.strftime('%d.%m')}"
 logger.info(list_name_search_template)
 
 list_name=''
